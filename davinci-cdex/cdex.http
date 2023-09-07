@@ -1,0 +1,71 @@
+// Configuration
+@fhirUrl = http://localhost:5826/fhir/r4
+@endpoint = http://localhost:5826/fhir/r4/$subscription-hook
+@topic = http://hl7.org/fhir/us/davinci-cdex/ImplementationGuide/hl7.fhir.us.davinci-cdex
+
+# @contentLevel = empty
+# @contentLevel = id-only
+@contentLevel = full-resource
+
+@format = application/fhir+json
+# @format = application/fhir+xml
+
+### GET Matching Tasks
+GET {{fhirUrl}}/Task?_tag:in=http://hl7.org/fhir/us/davinci-cdex/ValueSet/cdex-work-queue&intent=order&code:in=http://hl7.org/fhir/us/davinci-cdex/ValueSet/cdex-data-request-task-code&status=rejected,failed,completed
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+### POST Subscription
+# @name postRestHookSubscription
+POST {{fhirUrl}}/Subscription
+Accept: {{format}}
+Content-Type: application/fhir+json
+
+{
+  "resourceType": "Subscription",
+  "status": "requested",
+  "reason": "Test subscription",
+  "criteria": "{{topic}}",
+  "channel": {
+      "extension": [
+          {
+              "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-heartbeat-period",
+              "valueUnsignedInt": 86400
+          },
+          {
+              "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-timeout",
+              "valueUnsignedInt": 60
+          },
+          {
+              "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-max-count",
+              "valuePositiveInt": 20
+          }
+      ],
+      "type": "rest-hook",
+      "endpoint": "{{endpoint}}",
+      "payload": "{{format}}",
+      "_payload": {
+          "extension": [
+              {
+                  "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-payload-content",
+                  "valueCode": "{{contentLevel}}"
+              }
+          ]
+      }
+  }
+}
+
+### POST Submit requested TASK
+POST {{fhirUrl}}/Task
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./task01.json
+
+
+### POST Submit completed TASK
+POST {{fhirUrl}}/Task
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./task02.json

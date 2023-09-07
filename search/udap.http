@@ -1,0 +1,33 @@
+// config
+@fhirUrl = http://localhost:8080/fhir
+@endorserStaticUrl = http://localhost:3001/endorser/static
+@endorserApiUrl = http://localhost:3001/endorser/api
+
+@organizationName = Test Org
+@developerName = Gino Canessa
+
+### GET Endorser static
+
+GET {{endorserStaticUrl}}
+
+
+### POST - Create Developer
+# @name createDeveloper
+POST {{endorserApiUrl}}/developer
+Accept: application/json
+Content-Type: application/json
+
+{
+  "organizationName": "{{organizationName}}",
+  "developerName": "{{developerName}}"
+}
+
+### GET - Developer by ID
+# @name getDeveloper
+@developerId = {{createDeveloper.response.body.id}}
+GET {{endorserApiUrl}}/developer/{{developerId}}
+
+### DELETE - Developer by ID
+# @name deleteDeveloper
+@developerId = {{createDeveloper.response.body.id}}
+DELETE {{endorserApiUrl}}/developer/{{developerId}}

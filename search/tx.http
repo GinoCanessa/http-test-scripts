@@ -1,0 +1,118 @@
+// config
+@fhirUrl = http://tx.fhir.org/r4
+
+### GET Currencies
+
+GET {{fhirUrl}}/ValueSet/currencies/$expand
+Accept: application/fhir+json
+
+### GET SNO
+
+GET {{fhirUrl}}/CodeSystem/$lookup?system=http://snomed.info/sct&code=363779003
+Accept: application/fhir+json
+
+
+
+### GET 
+
+GET {{fhirUrl}}/CodeSystem/$lookup?system=http://www.genenames.org/&code=12014
+Accept: application/fhir+json
+
+
+### GET Currency PLN
+
+GET {{fhirUrl}}/CodeSystem/$lookup?system=urn:iso:std:iso:4217&code=PLN
+Accept: application/fhir+json
+
+### GET Currency PYG
+
+GET {{fhirUrl}}/CodeSystem/$lookup?system=urn:iso:std:iso:4217&code=PYG
+Accept: application/fhir+json
+
+### GET Currency STN
+
+GET {{fhirUrl}}/CodeSystem/$lookup?system=urn:iso:std:iso:4217&code=STN
+Accept: application/fhir+json
+
+### POST batch lookup
+POST {{fhirUrl}}
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+{
+  "ResourceType": "Bundle",
+  "type": "batch",
+  "entry": [{
+    "request": {
+      "method": "GET",
+      "url": "CodeSystem/$lookup?system=urn:iso:std:iso:4217&code=PLN"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "url": "CodeSystem/$lookup?system=urn:iso:std:iso:4217&code=PYG"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "url": "CodeSystem/$lookup?system=urn:iso:std:iso:4217&code=STN"
+    }
+  }]
+}
+
+### Get Metatada
+GET {{fhirUrl}}/metadata
+Accept: application/fhir+json
+
+### Get Metatada
+GET http://hapi.fhir.org/baseR4/metadata
+Accept: application/fhir+json
+
+
+### Random
+
+GET http://build.fhir.org/version.info
+Accept: *.*
+
+### Random
+
+GET http://build.fhir.org/ig/HL7/fhir-subscription-backport-ig/package.manifest.json
+Accept: *.*
+
+### Random
+
+GET http://build.fhir.org/ig/HL7/
+Accept: *.*
+
+### Random
+
+GET http://localhost:5246/FhirManager/package/
+Accept: application/json
+
+###
+GET http://localhost:5246/FhirManager/package/record?packageName=hl7.fhir.r4.core&version=4.0.1
+Accept: application/json
+
+###
+GET http://localhost:5246/api/FhirManager/p/hl7.fhir.r4.core/version/4.0.1/manifest
+Accept: application/json
+
+###
+GET http://localhost:5246/FhirManager/package/artifacts?packageName=hl7.fhir.r4.core&version=4.0.1
+Accept: application/json
+
+###
+GET http://localhost:5246/api/package/hl7.fhir.r4.core/4.0.1/artifact/primitivetype
+Accept: application/json
+
+
+
+###
+GET http://localhost:5246/api/package/hl7.fhir.us.core/4.1.0/artifactIndex
+Accept: application/json
+
+###
+GET http://localhost:5246/api/package/hl7.fhir.us.core/4.1.0/artifact/primitivetype
+Accept: application/json

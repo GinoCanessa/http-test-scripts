@@ -1,0 +1,20 @@
+// Configuration
+@fhirUrl = http://localhost:5826/fhir/r5
+
+### GET Metadata
+GET {{fhirUrl}}/metadata
+Accept: application/fhir+json
+
+### POST Patient
+POST {{fhirUrl}}/Patient
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./patient-example.json
+
+### POST SubscriptionTopic
+POST {{fhirUrl}}/SubscriptionTopic
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./r5-subscriptiontopic-encounter-example.json

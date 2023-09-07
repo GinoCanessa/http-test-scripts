@@ -1,0 +1,16 @@
+// Base URLs
+@baseAz = https://fhirdemo5.azurewebsites.net
+@baseHapi = http://hapi.fhir.org/baseR4
+
+
+### 
+GET {{baseAz}}/metadata
+Accept: application/fhir+json
+
+###
+GET {{baseHapi}}/metadata
+Accept: application/fhir+json
+
+###
+GET {{baseHapi}}/SearchParameter?target=Organization
+Accept: application/fhir+json

@@ -1,0 +1,46 @@
+// Configuration
+@fhirUrl = http://hapi.fhir.org/baseR4
+# @fhirUrl = http://localhost:8080/fhir
+
+### GET Metadata
+
+GET {{fhirUrl}}/metadata
+Accept: application/fhir+json
+
+
+### GET-based search for Patients
+GET {{fhirUrl}}/Patient?name:exact=test&birthdate:missing=false&_elements=name,birthDate,gender,photo
+Accept: application/fhir+json
+
+### GET-based search for Patients
+GET {{fhirUrl}}/Encounter?patient.given:exact=test
+Accept: application/fhir+json
+
+### 
+GET {{fhirUrl}}/Encounter
+  ?_include=Encounter:patient
+  &_include=Encounter:diagnosis
+Accept: application/fhir+json
+
+### 
+GET {{fhirUrl}}/Patient
+  ?given=Aaron
+  &family=S
+Accept: application/fhir+json
+
+### 
+GET {{fhirUrl}}/Patient
+  ?_revinclude=Encounter:patient
+Accept: application/fhir+json
+
+
+### POST-based search for Patients
+POST {{fhirUrl}}/Patient/_search
+Accept: application/fhir+json
+Content-Type: application/x-www-form-urlencoded
+
+_id=1092481
+
+###
+GET https://sqlonfhir-r4.azurewebsites.net/fhir/Encounter/example/_history/1
+Accept: application/fhir+json

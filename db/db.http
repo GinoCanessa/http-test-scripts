@@ -1,0 +1,36 @@
+// Configuration
+@fhirUrl = http://localhost:5185/fhir
+
+### GET Metadata
+
+GET {{fhirUrl}}/metadata
+Accept: application/fhir+json
+
+
+### GET-based search for Patients
+# @name searchPatient
+GET {{fhirUrl}}/Patient
+Accept: application/fhir+json
+
+
+### GET-based read for a Patient
+# @name readPatient
+@id = 348f53d2-e45d-4432-a77b-3f76474fe5de
+
+GET {{fhirUrl}}/Patient/{{id}}
+Accept: application/fhir+json
+
+
+### GET-based read for a Patient
+
+GET {{fhirUrl}}/Patient/a422a161-bbc8-4fca-8f14-865b095b285f
+Accept: application/fhir+json
+
+
+### POST-based write for Patient
+# @name writePatient
+POST {{fhirUrl}}/patient
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./patient-example.json

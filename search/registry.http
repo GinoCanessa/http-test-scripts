@@ -1,0 +1,46 @@
+// config
+@url1 = http://packages.fhir.org/
+@url2 = http://packages2.fhir.org/packages/
+@url3 = https://packages.simplifier.net/
+
+# @package = hl7.fhir.r4.core
+# @package = hl7.fhir.us.core
+@package = hl7.fhir.us.davinci-cdex
+
+@version = 2.0.0
+
+### Package Versions 1
+GET {{url1}}{{package}}
+Accept: application/json
+
+### Package Versions 2
+GET {{url2}}{{package}}
+Accept: application/json
+
+### Package Versions 3
+GET {{{url3}}{{{package}}}
+Accept: application/json
+
+# ### Get 1.0.1 (gets package)
+# HEAD https://packages.simplifier.net/hl7.fhir.us.core/4.1.0
+# Accept: application/json
+
+# ### GET 1.1 (gets package)
+
+# GET {{url1}}{{package}}/{{version}}
+# Accept: application/json
+
+# # https://packages.simplifier.net/hl7.fhir.us.davinci-cdex/2.0.0
+# ### GET 2
+# GET {{url3}}{{package}}/{{version}}/package.json
+# Accept: application/json
+
+# ### GET 2
+
+# GET {{url3}}{{package}}/{{version}}/-/package.json
+# Accept: application/json
+
+# ### GET 2.
+
+# GET {{url1}}{{package}}/-/package.json
+# Accept: application/json

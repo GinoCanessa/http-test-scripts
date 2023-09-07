@@ -1,0 +1,36 @@
+// Configuration
+@payerUrl = http://localhost:5826/fhir/payer
+@providerUrl = http://localhost:5826/fhir/provider
+@endpoint = http://localhost:5826/fhir/r4/$subscription-hook
+@topic = http://
+
+# @contentLevel = empty
+@contentLevel = id-only
+# @contentLevel = full-resource
+
+@format = application/fhir+json
+# @format = application/fhir+xml
+
+### GET Provider Roles and Practitioners
+GET {{providerUrl}}/PractitionerRole?_include=PractitionerRole:practitioner&_include=PractitionerRole:location
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+### GET ALL Claims
+GET {{payerUrl}}/Claim
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+### POST Submit for Claim
+POST {{payerUrl}}/Claim/$submit
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./SurgicalAdmissionRequestBundle.json
+
+### POST Inquiry for Claim
+POST {{payerUrl}}/Claim/$inquire
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./ClaimInquiryBundle.json

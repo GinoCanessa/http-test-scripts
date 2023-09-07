@@ -1,0 +1,32 @@
+{
+  "_id": "hl7.fhir.r4b.core",
+  "name": "hl7.fhir.r4b.core",
+  "dist-tags": {
+    "latest": "4.3.0"
+  },
+  "versions": {
+    "4.3.0": {
+      "name": "hl7.fhir.r4b.core",
+      "date": "2021-03-11T12:00:00-00:00",
+      "version": "4.3.0",
+      "fhirVersion": "R4B",
+      "kind": "Core",
+      "count": "92",
+      "canonical": "http://hl7.org/fhir",
+      "description": "FHIR Core package - the NPM package that contains all the definitions for the base FHIR specification (built Thu, Mar 11, 2021 17:06+1100+11:00)",
+      "url": "http://packages2.fhir.org/packages/hl7.fhir.r4b.core/4.3.0"
+    },
+    "4.3.0-snapshot1": {
+      "name": "hl7.fhir.r4b.core",
+      "date": "2021-12-20T14:13:00-00:00",
+      "version": "4.3.0-snapshot1",
+      "fhirVersion": "R4B",
+      "kind": "Core",
+      "count": "1758",
+      "canonical": "http://hl7.org/fhir",
+      "description": "FHIR Core package - the NPM package that contains all the conformance resources in the base FHIR specification (built Tue, Dec 21, 2021 15:26+1100+11:00)",
+      "url": "http://packages2.fhir.org/packages/hl7.fhir.r4b.core/4.3.0-snapshot1"
+    }
+  },
+  "description": "FHIR Core package - the NPM package that contains all the conformance resources in the base FHIR specification (built Tue, Dec 21, 2021 15:26+1100+11:00)"
+}

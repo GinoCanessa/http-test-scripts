@@ -1,0 +1,23 @@
+// Configuration
+@v1 = http://server.subscriptions.argo.run/r4
+# @fhirUrl = http://hapi.fhir.org/baseR4
+#@fhirUrl = http://localhost:8080/fhir
+@fhirUrl = http://localhost:5103/fhir
+
+### GET Metadata
+
+GET {{fhirUrl}}/metadata
+Accept: application/fhir+json
+
+###
+GET {{v1}}/SubscriptionTopic/encounter-start
+Accept: application/fhir+json
+
+###
+GET {{v1}}/Patient/example
+Accept: application/fhir+json
+
+###
+GET {{v1}}/Encounter/example
+Accept: application/fhir+json
+
