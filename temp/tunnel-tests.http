@@ -1,0 +1,50 @@
+// Configuration
+@fhirUrl = http://server.subscriptions.argo.run/r4
+@topicCanonical = http://argonautproject.org/encounters-ig/SubscriptionTopic/encounter-start
+
+@tunnelUrl = https://fhir-subscriptions-local-tunnel-test.loca.lt
+
+### Get Bundle of SubscriptionTopic resources
+
+GET {{fhirUrl}}/SubscriptionTopic
+Accept: application/fhir+json
+
+### Create Subscription
+
+
+
+
+### Generic Test
+
+POST http://localhost:5000/notification HTTP/1.1
+Content-Type: application/json
+
+{
+  "hello":"world"
+}
+
+###
+@groupId = EQS8857
+GET {{fhirUrl}}/Group?_id={{groupId}}&_include=Group:member
+Accept: application/fhir+json
+
+
+###
+
+POST {{tunnelUrl}}/notification HTTP/1.1
+Content-Type: application/json
+
+{
+  "hello":"world"
+}
+
+###
+GET http://localhost:5000/
+###
+GET https://localhost:5001/notification
+###
+GET https://fhir-subscriptions-local-tunnel-test.loca.lt/ HTTP/1.1
+###
+GET https://chilly-mule-84.loca.lt HTTP/1.1
+###
+GET https://selfish-seahorse-84.loca.lt HTTP/1.1
