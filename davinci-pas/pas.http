@@ -11,6 +11,13 @@
 @format = application/fhir+json
 # @format = application/fhir+xml
 
+### POST claim
+POST {{payerUrl}}/Claim/$submit
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./touchstone-bundle01.json
+
 ### GET Provider Roles and Practitioners
 GET {{providerUrl}}/PractitionerRole?_include=PractitionerRole:practitioner&_include=PractitionerRole:location
 Accept: application/fhir+json

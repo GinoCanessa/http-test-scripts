@@ -1,0 +1,54 @@
+{
+    "resourceType": "Subscription",
+    "id": "1e15993e-c74f-43e1-bb84-5102c7ed7fd5",
+    "meta": {
+      "versionId": "1",
+      "lastUpdated": "2023-09-10T20:11:19.8576129+00:00",
+      "profile": [
+        "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-subscription"
+      ]
+    },
+    "text": {
+      "status": "generated",
+      "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative: Subscription</b><a> name=\"subscription-admission\"</a></p></div>"
+    },
+    "status": "active",
+    "end": "2023-12-31T12:00:00+00:00",
+    "reason": "Topic-Based Subscription for PAS",
+    "criteria": "http://hl7.org/SubscriptionTopic/priorauth",
+    "_criteria": {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-filter-criteria",
+          "valueString": "ClaimResponse?identifier=B56789&patient.identifier=http://example.org/MIN|12345678901&status=active"
+        }
+      ]
+    },
+    "channel": {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-heartbeat-period",
+          "valueUnsignedInt": 86400
+        },
+        {
+          "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-timeout",
+          "valueUnsignedInt": 60
+        },
+        {
+          "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-max-count",
+          "valuePositiveInt": 20
+        }
+      ],
+      "type": "rest-hook",
+      "endpoint": "https://pas.ri.argo.run/fhir/provider/$subscription-hook",
+      "payload": "application/fhir+json",
+      "_payload": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-payload-content",
+            "valueCode": "id-only"
+          }
+        ]
+      }
+    }
+  }
