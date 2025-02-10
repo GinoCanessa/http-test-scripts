@@ -1,5 +1,6 @@
 // Configuration
-@fhirUrl = http://localhost:5826/fhir/r4
+ @fhirUrl = http://localhost:5826/fhir/r4
+#@fhirUrl = http://server.fire.ly/r4
 @endpoint = http://localhost:5826/fhir/r4/$subscription-hook
 @topic = http://example.org/FHIR/SubscriptionTopic/encounter-complete
 
@@ -8,7 +9,65 @@
 # @contentLevel = full-resource
 
 @format = application/fhir+json
-# @format = application/fhir+xml
+#@format = application/fhir+xml
+
+
+### GET CapabilityStatement
+GET {{fhirUrl}}/metadata
+Accept: {{format}}
+# Forwarded: host=ginoc.io;proto=https
+
+
+### GET-based search for Patients
+GET {{fhirUrl}}/$
+Accept: {{format}}
+
+
+### GET-based search for Patients
+GET {{fhirUrl}}/Encounter
+  ?patient.family:exact=Chalmers
+Accept: {{format}}
+
+### 
+GET {{fhirUrl}}/Encounter
+  ?_include=Encounter:patient
+  &_include=Encounter:diagnosis
+Accept: {{format}}
+
+### 
+GET {{fhirUrl}}/Patient
+  ?given=Amy
+  &family=S
+Accept: {{format}}
+
+### 
+GET {{fhirUrl}}/Patient
+  ?_revinclude=Encounter:patient
+Accept: {{format}}
+
+### GET SP
+GET {{fhirUrl}}/SearchParameter
+Accept: application/fhir+json
+Accept: {{format}}
+
+### POST Patient Contact Family Name SP
+POST {{fhirUrl}}/SearchParameter
+Content-Type: application/fhir+json
+Accept: {{format}}
+
+<@ ./sp-patient-contact-family.json
+
+### 
+GET {{fhirUrl}}/Patient
+  ?contact-family=du
+Accept: {{format}}
+
+### POST Patient
+POST {{fhirUrl}}/Patient
+Content-Type: application/fhir+json
+Accept: {{format}}
+
+<@ ./patient-no-id.json
 
 ### POST Subscription
 # @name postRestHookSubscription
@@ -93,3 +152,8 @@ Accept: {{format}}
 ### GET Encounter
 GET {{fhirUrl}}/Encounter/{{postCompleteEncounter.response.body.$.id}}
 Accept: {{format}}
+
+### 
+GET {{fhirUrl}}/Patient/d184bb4c-f02f-41e8-88d4-b7f461f1fe61
+Accept: {{format}}
+If-None-Match: W/"1"

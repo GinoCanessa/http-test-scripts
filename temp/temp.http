@@ -1,0 +1,4 @@
+
+
+GET http://hl7.org/fhir/ValueSet/name-part-qualifier
+Accept: text/html

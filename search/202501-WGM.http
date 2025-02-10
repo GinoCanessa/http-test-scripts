@@ -1,0 +1,331 @@
+// Configuration
+@candleUrl = http://localhost:5826/fhir/r4
+@firelyUrl = https://server.fire.ly
+@hapiUrl = http://hapi.fhir.org/baseR4
+
+
+### GET Metadata - candle
+GET {{candleUrl}}/metadata
+Accept: application/fhir+json
+
+### GET Metadata - HAPI
+GET {{candleUrl}}/metadata
+Accept: application/fhir+json
+
+
+
+
+
+
+### GET-based search for Patients
+GET {{candleUrl}}/Patient
+Accept: application/fhir+json
+
+
+
+
+
+
+
+
+### GET-based search for Patients with paging
+# @name firelyPatientInitial
+GET {{firelyUrl}}/Patient?_count=2
+Accept: application/fhir+json
+
+### GET-based search for Patients with paging
+# @name firelyPatientInitial
+GET {{firelyPatientInitial.response.body.$.link[1].url}}
+Accept: application/fhir+json
+
+### GET-based search for Patients with paging NOT SUPPORTED
+GET {{candleUrl}}/Patient?_count=2
+Accept: application/fhir+json
+
+
+
+
+
+
+
+
+### GET-based search for family name (1)
+GET {{candleUrl}}/Patient?family=Roberts
+Accept: application/fhir+json
+
+### POST-based search for family name (1)
+POST {{candleUrl}}/Patient/_search
+Content-Type: application/x-www-form-urlencoded
+Accept: application/fhir+json
+
+family=Roberts
+
+
+### GET-based search for exact family name (0)
+GET {{candleUrl}}/Patient?family:exact=Roberts
+Accept: application/fhir+json
+
+### GET-based search for exact family (1)
+GET {{candleUrl}}/Patient?family:exact=Roberts511
+Accept: application/fhir+json
+
+
+
+
+
+
+
+
+
+
+### GET-based search for Patients with sorting (asc)
+GET {{candleUrl}}/Patient?_sort=family
+Accept: application/fhir+json
+
+### GET-based search for Patients with sorting (desc)
+GET {{candleUrl}}/Patient?_sort=-family
+Accept: application/fhir+json
+
+
+
+
+
+
+
+
+
+
+### Default Date handling: defaults to equality (1)
+GET {{candleUrl}}/Patient?birthdate=2019-04-18
+Accept: application/fhir+json
+
+### Explicit Equality Test: eq (1)
+GET {{candleUrl}}/Patient?birthdate=eq2019-04-18
+Accept: application/fhir+json
+
+### Not-equal: ne (11)
+GET {{candleUrl}}/Patient?birthdate=ne2019-04-18
+Accept: application/fhir+json
+
+### Greater Than: gt (0)
+GET {{candleUrl}}/Patient?birthdate=gt2019-04-18
+Accept: application/fhir+json
+
+### Greater Than or Equal To: ge (1)
+GET {{candleUrl}}/Patient?birthdate=ge2019-04-18
+Accept: application/fhir+json
+
+### Less Than: lt (11)
+GET {{candleUrl}}/Patient?birthdate=lt2019-04-18
+Accept: application/fhir+json
+
+### Less Than or Equal To: le (12)
+GET {{candleUrl}}/Patient?birthdate=le2019-04-18
+Accept: application/fhir+json
+
+
+
+
+
+
+
+
+### AND search: Join two different parameters (1)
+GET {{candleUrl}}/Patient?family=Roberts&given=Arthur650
+Accept: application/fhir+json
+
+### AND search: Join two different parameters, with modifiers (0)
+GET {{candleUrl}}/Patient?family:exact=Roberts&given:contains=650
+Accept: application/fhir+json
+
+### AND search: Join two different parameters, with modifiers (1)
+GET {{candleUrl}}/Patient?family:exact=Roberts511&given:contains=650
+Accept: application/fhir+json
+
+### OR search: Join two values (2)
+GET {{candleUrl}}/Patient?family=Glover,Roberts
+Accept: application/fhir+json
+
+### OR search: Join two values, with modifiers (1)
+GET {{candleUrl}}/Patient?family:exact=Glover,Roberts511
+Accept: application/fhir+json
+
+### OR search: Join two values, with modifiers (2)
+GET {{candleUrl}}/Patient?family:exact=Glover433,Roberts511
+Accept: application/fhir+json
+
+### Special Case: Search on Name (family portion)
+GET {{candleUrl}}/Patient?name=Roberts511
+Accept: application/fhir+json
+
+### Special Case: Search on Name (given portion)
+GET {{candleUrl}}/Patient?name=Arthur650
+Accept: application/fhir+json
+
+### Special Case: Search on Name with OR values
+GET {{candleUrl}}/Patient?name=Glover433,Roberts511
+Accept: application/fhir+json
+
+### Special Case: Search on Name with OR values and Modifiers
+GET {{candleUrl}}/Patient?name:contains=433,511
+Accept: application/fhir+json
+
+
+
+
+
+
+
+
+
+
+### GET-based search for Encounters that match a patient name (20)
+GET {{candleUrl}}/Encounter?patient.name=Roberts
+Accept: application/fhir+json
+
+### GET-based search for Encounters that match a patient name and include the patient (20)
+GET {{candleUrl}}/Encounter
+    ?patient.name=Roberts
+    &_include=Encounter:patient
+Accept: application/fhir+json
+
+
+
+
+
+
+
+
+
+
+###
+# @name resolvePatient
+//GET {{candleUrl}}/Patient?identifier=https://github.com/synthetichealth/synthea|5358446e-e631-c640-5880-c6cf99dc8bed
+GET {{candleUrl}}/Patient?identifier=https://github.com/synthetichealth/synthea|ec1a6cad-8825-7b5c-4e14-257c696d5f11
+Accept: application/fhir+json
+
+###
+GET {{candleUrl}}/Encounter?subject={{resolvePatient.response.body.$.entry[0].resource.id}}
+Accept: application/fhir+json
+
+###
+GET {{candleUrl}}/Encounter?subject={{resolvePatient.response.body.$.entry[0].resource.id}}&_sort=-participant
+Accept: application/fhir+json
+
+###
+GET {{candleUrl}}/Encounter?subject=Patient/cc5eb529-d49d-498e-adaf-a1000e33368c&_sort=-_id
+Accept: application/fhir+json
+
+###
+# @name resolveEncounter
+//GET {{candleUrl}}/Encounter?identifier=https://github.com/synthetichealth/synthea|e0cf8dc7-d038-815b-295e-d03f90f1fc57
+GET {{candleUrl}}/Encounter?identifier=https://github.com/synthetichealth/synthea|a0b16554-241c-d4fb-58b8-fd2f625469ce
+Accept: application/fhir+json
+
+###
+GET {{candleUrl}}/Encounter?identifier=https://github.com/synthetichealth/synthea|e0cf8dc7-d038-815b-295e-d03f90f1fc57&_include=Encounter:participant
+Accept: application/fhir+json
+
+
+###
+GET {{candleUrl}}/Encounter
+  ?identifier=https://github.com/synthetichealth/synthea|e0cf8dc7-d038-815b-295e-d03f90f1fc57
+  &location:identifier=https://github.com/synthetichealth/synthea|34d300db-86bd-3ca9-9a41-bf7ac5895e52
+  &period=2016-09-12
+Accept: application/fhir+json
+
+###
+GET {{candleUrl}}/Encounter
+  ?identifier=https://github.com/synthetichealth/synthea|e0cf8dc7-d038-815b-295e-d03f90f1fc57
+  &location:identifier=https://github.com/synthetichealth/synthea|34d300db-86bd-3ca9-9a41-bf7ac5895e52
+  &period=2016-09-12
+Accept: application/fhir+json
+
+###
+GET {{candleUrl}}/Observation?_id=5298e439-56cd-4e0b-a06d-e625788de087
+Accept: application/fhir+json
+
+###
+GET {{candleUrl}}/Observation
+  ?code=http://loinc.org|777-3
+  &value-quantity=192.97|10*3/uL
+Accept: application/fhir+json
+
+###
+# GET {{candleUrl}}/Encounter?
+#   ?code-value-quantity=http://loinc.org|777-3$192.97|10*3/uL
+# Accept: application/fhir+json
+
+GET {{candleUrl}}/Encounter
+  ?diagnosis-reference.code=http://loinc.org|777-3
+  &_maxresults=10
+Accept: application/fhir+json
+
+### 
+GET {{candleUrl}}/Patient/d184bb4c-f02f-41e8-88d4-b7f461f1fe61
+
+
+###
+GET {{candleUrl}}/Observation
+  ?reason-reference.code=http://loinc.org|5778-6
+  &reason-reference.value-concept=http://snomed.info/sct|371254008
+  &_maxresults=10
+Accept: application/fhir+json
+
+###
+GET {{candleUrl}}/Observation
+  ?_id=5298e439-56cd-4e0b-a06d-e625788de087
+  &code-value-concept=http://loinc.org|5778-6$http://snomed.info/sct|371254008
+Accept: application/fhir+json
+
+###
+GET {{candleUrl}}/Observation?code-value-concept=http://loinc.org|5778-6$http://snomed.info/sct|371254008
+Accept: application/fhir+json
+
+
+########################
+### current id - 9706e9c0-9214-498c-89db-552c751bdfac
+GET {{candleUrl}}/Encounter?identifier=https://github.com/synthetichealth/synthea|a0b16554-241c-d4fb-58b8-fd2f625469ce
+Accept: application/fhir+json
+
+### current id - e201f28a-b6c2-4928-b2a7-c8e65509c2ac
+GET {{candleUrl}}/Patient?identifier=https://github.com/synthetichealth/synthea|ec1a6cad-8825-7b5c-4e14-257c696d5f11
+Accept: application/fhir+json
+
+###
+GET {{candleUrl}}/Encounter
+  ?identifier=https://github.com/synthetichealth/synthea|a0b16554-241c-d4fb-58b8-fd2f625469ce
+  &patient=e201f28a-b6c2-4928-b2a7-c8e65509c2ac
+Accept: application/fhir+json
+
+
+### Look for a Patient that has an Encounter with a specific identifier - should be returning 1
+GET {{candleUrl}}/Patient
+  ?_has:Encounter:patient:identifier=https://github.com/synthetichealth/synthea|a0b16554-241c-d4fb-58b8-fd2f625469ce
+  &_revinclude=Encounter:patient
+Accept: application/fhir+json
+
+### Look for a Patient that has an Encounter with a specific identifier - should be returning 1
+GET {{candleUrl}}/Encounter
+  ?identifier=https://github.com/synthetichealth/synthea|a0b16554-241c-d4fb-58b8-fd2f625469ce
+  &_include=Encounter:patient
+Accept: application/fhir+json
+
+###
+GET {{candleUrl}}/Encounter
+  ?patient.identifier:not=https://github.com/synthetichealth/synthea|ec1a6cad-8825-7b5c-4e14-257c696d5f11
+Accept: application/fhir+json
+
+### 20
+GET {{candleUrl}}/Encounter
+  ?patient.identifier=https://github.com/synthetichealth/synthea|ec1a6cad-8825-7b5c-4e14-257c696d5f11
+Accept: application/fhir+json
+
+
+#####################
+###
+GET {{candleUrl}}/Observation
+  ?_id=0892f66a-bc0d-405f-bab8-cbeeb1d80b61
+  &_include=Observation:patient
+  &_include=Observation:encounter
+Accept: application/fhir+json

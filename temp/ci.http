@@ -1,0 +1,15 @@
+@ciUrl = https://build.fhir.org/
+
+### Current main package
+GET {{ciUrl}}branches/2024-08-gg-remove-maps/version.info
+Accept: text/plain
+
+### Current main package
+GET {{ciUrl}}version.info
+Accept: text/plain
+
+### Current main package
+GET {{ciUrl}}package/package.json
+Accept: application/json
+
+

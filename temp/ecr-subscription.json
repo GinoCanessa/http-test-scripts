@@ -1,0 +1,46 @@
+{
+  "resourceType": "Subscription",
+  "id": "encounter-start-subscription",
+  "text": {
+    "status": "extensions",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Encounter Start Subscription Example</b></p></div>"
+  },
+  "status": "active",
+  "reason": "Creation of subscription based on encounter-start trigger event from PlanDefintiion.",
+  "criteria": "http://hl7.org/fhir/us/ecr/SubscriptionTopic/encounter-start",
+  "_criteria": {
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-filter-criteria",
+        "valueString": "Encounter?status=in-progress"
+      }
+    ]
+  },
+  "channel": {
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-heartbeat-period",
+        "valueUnsignedInt": 86400
+      },
+      {
+        "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-timeout",
+        "valueUnsignedInt": 60
+      },
+      {
+        "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-max-count",
+        "valuePositiveInt": 20
+      }
+    ],
+    "type": "rest-hook",
+    "endpoint": "http://44.199.188.139:8484/api/receive-notification",
+    "payload": "application/fhir+json",
+    "_payload": {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-payload-content",
+          "valueCode": "full-resource"
+        }
+      ]
+    }
+  }
+}

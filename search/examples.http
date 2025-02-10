@@ -1,12 +1,20 @@
 // Configuration
-@fhirUrl = http://hapi.fhir.org/baseR4
-# @fhirUrl = http://localhost:8080/fhir
+# @fhirUrl = http://hapi.fhir.org/baseR4
+@fhirUrl = http://localhost:5826/fhir/r4
 
 ### GET Metadata
 
 GET {{fhirUrl}}/metadata
 Accept: application/fhir+json
 
+
+### GET-based search for Patients
+GET {{fhirUrl}}/Patient
+Accept: application/fhir+json
+
+###
+GET https://hapi.fhir.org/baseR4?_getpages=eea3054e-1f6f-4e47-8b36-34e3976ce1b9&_getpagesoffset=20&_count=20&_pretty=true&_bundletype=searchset
+Accept: application/fhir+json
 
 ### GET-based search for Patients
 GET {{fhirUrl}}/Patient?name:exact=test&birthdate:missing=false&_elements=name,birthDate,gender,photo
@@ -43,4 +51,142 @@ _id=1092481
 
 ###
 GET https://sqlonfhir-r4.azurewebsites.net/fhir/Encounter/example/_history/1
+Accept: application/fhir+json
+
+###
+
+GET {{fhirUrl}}/Patient?_sort=-name
+Accept: application/fhir+json
+
+
+###
+# @name resolvePatient
+//GET {{fhirUrl}}/Patient?identifier=https://github.com/synthetichealth/synthea|5358446e-e631-c640-5880-c6cf99dc8bed
+GET {{fhirUrl}}/Patient?identifier=https://github.com/synthetichealth/synthea|ec1a6cad-8825-7b5c-4e14-257c696d5f11
+Accept: application/fhir+json
+
+###
+GET {{fhirUrl}}/Encounter?subject={{resolvePatient.response.body.$.entry[0].resource.id}}
+Accept: application/fhir+json
+
+###
+GET {{fhirUrl}}/Encounter?subject={{resolvePatient.response.body.$.entry[0].resource.id}}&_sort=-participant
+Accept: application/fhir+json
+
+###
+GET {{fhirUrl}}/Encounter?subject=Patient/cc5eb529-d49d-498e-adaf-a1000e33368c&_sort=-_id
+Accept: application/fhir+json
+
+###
+# @name resolveEncounter
+//GET {{fhirUrl}}/Encounter?identifier=https://github.com/synthetichealth/synthea|e0cf8dc7-d038-815b-295e-d03f90f1fc57
+GET {{fhirUrl}}/Encounter?identifier=https://github.com/synthetichealth/synthea|a0b16554-241c-d4fb-58b8-fd2f625469ce
+Accept: application/fhir+json
+
+###
+GET {{fhirUrl}}/Encounter?identifier=https://github.com/synthetichealth/synthea|e0cf8dc7-d038-815b-295e-d03f90f1fc57&_include=Encounter:participant
+Accept: application/fhir+json
+
+
+###
+GET {{fhirUrl}}/Encounter
+  ?identifier=https://github.com/synthetichealth/synthea|e0cf8dc7-d038-815b-295e-d03f90f1fc57
+  &location:identifier=https://github.com/synthetichealth/synthea|34d300db-86bd-3ca9-9a41-bf7ac5895e52
+  &period=2016-09-12
+Accept: application/fhir+json
+
+###
+GET {{fhirUrl}}/Encounter
+  ?identifier=https://github.com/synthetichealth/synthea|e0cf8dc7-d038-815b-295e-d03f90f1fc57
+  &location:identifier=https://github.com/synthetichealth/synthea|34d300db-86bd-3ca9-9a41-bf7ac5895e52
+  &period=2016-09-12
+Accept: application/fhir+json
+
+###
+GET {{fhirUrl}}/Observation?_id=5298e439-56cd-4e0b-a06d-e625788de087
+Accept: application/fhir+json
+
+###
+GET {{fhirUrl}}/Observation
+  ?code=http://loinc.org|777-3
+  &value-quantity=192.97|10*3/uL
+Accept: application/fhir+json
+
+###
+# GET {{fhirUrl}}/Encounter?
+#   ?code-value-quantity=http://loinc.org|777-3$192.97|10*3/uL
+# Accept: application/fhir+json
+
+GET {{fhirUrl}}/Encounter
+  ?diagnosis-reference.code=http://loinc.org|777-3
+  &_maxresults=10
+Accept: application/fhir+json
+
+### 
+GET {{fhirUrl}}/Patient/d184bb4c-f02f-41e8-88d4-b7f461f1fe61
+
+
+###
+GET {{fhirUrl}}/Observation
+  ?reason-reference.code=http://loinc.org|5778-6
+  &reason-reference.value-concept=http://snomed.info/sct|371254008
+  &_maxresults=10
+Accept: application/fhir+json
+
+###
+GET {{fhirUrl}}/Observation
+  ?_id=5298e439-56cd-4e0b-a06d-e625788de087
+  &code-value-concept=http://loinc.org|5778-6$http://snomed.info/sct|371254008
+Accept: application/fhir+json
+
+###
+GET {{fhirUrl}}/Observation?code-value-concept=http://loinc.org|5778-6$http://snomed.info/sct|371254008
+Accept: application/fhir+json
+
+
+########################
+### current id - 9706e9c0-9214-498c-89db-552c751bdfac
+GET {{fhirUrl}}/Encounter?identifier=https://github.com/synthetichealth/synthea|a0b16554-241c-d4fb-58b8-fd2f625469ce
+Accept: application/fhir+json
+
+### current id - e201f28a-b6c2-4928-b2a7-c8e65509c2ac
+GET {{fhirUrl}}/Patient?identifier=https://github.com/synthetichealth/synthea|ec1a6cad-8825-7b5c-4e14-257c696d5f11
+Accept: application/fhir+json
+
+###
+GET {{fhirUrl}}/Encounter
+  ?identifier=https://github.com/synthetichealth/synthea|a0b16554-241c-d4fb-58b8-fd2f625469ce
+  &patient=e201f28a-b6c2-4928-b2a7-c8e65509c2ac
+Accept: application/fhir+json
+
+
+### Look for a Patient that has an Encounter with a specific identifier - should be returning 1
+GET {{fhirUrl}}/Patient
+  ?_has:Encounter:patient:identifier=https://github.com/synthetichealth/synthea|a0b16554-241c-d4fb-58b8-fd2f625469ce
+  &_revinclude=Encounter:patient
+Accept: application/fhir+json
+
+### Look for a Patient that has an Encounter with a specific identifier - should be returning 1
+GET {{fhirUrl}}/Encounter
+  ?identifier=https://github.com/synthetichealth/synthea|a0b16554-241c-d4fb-58b8-fd2f625469ce
+  &_include=Encounter:patient
+Accept: application/fhir+json
+
+###
+GET {{fhirUrl}}/Encounter
+  ?patient.identifier:not=https://github.com/synthetichealth/synthea|ec1a6cad-8825-7b5c-4e14-257c696d5f11
+Accept: application/fhir+json
+
+### 20
+GET {{fhirUrl}}/Encounter
+  ?patient.identifier=https://github.com/synthetichealth/synthea|ec1a6cad-8825-7b5c-4e14-257c696d5f11
+Accept: application/fhir+json
+
+
+#####################
+###
+GET {{fhirUrl}}/Observation
+  ?_id=0892f66a-bc0d-405f-bab8-cbeeb1d80b61
+  &_include=Observation:patient
+  &_include=Observation:encounter
 Accept: application/fhir+json

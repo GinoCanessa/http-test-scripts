@@ -1,13 +1,14 @@
 // config
-@url1 = http://packages.fhir.org/
+@url1 = https://packages.fhir.org/
 @url2 = http://packages2.fhir.org/packages/
 @url3 = https://packages.simplifier.net/
 
 # @package = hl7.fhir.r4.core
 # @package = hl7.fhir.us.core
-@package = hl7.fhir.us.davinci-cdex
+# @package = hl7.fhir.us.davinci-cdex
+@package = hl7.fhir.uv.extensions
 
-@version = 2.0.0
+@version = 1
 
 ### Package Versions 1
 GET {{url1}}{{package}}

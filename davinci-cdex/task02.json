@@ -88,7 +88,7 @@
                   }
               ]
           },
-          "valueString": "Condition?patient=cdex-example-patient&clinical-status=Active"
+          "valueString": "Condition?patient=davinci-amy-shaw&clinical-status=Active"
       },
       {
           "type": {

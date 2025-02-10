@@ -1,0 +1,26 @@
+
+
+### 
+POST https://vitals-server.ri.argo.run/fhir/smart/Observation
+Accept: application/json
+Content-Type: application/json+fhir
+Authorization: Bearer 6e398f4e-c646-45db-8876-775183253d72_9f9f7df5-395a-4f9f-809d-c70ee62c092d
+
+<@ dan-bp-simple.json
+
+
+
+###### 
+POST http://localhost:5826/fhir/open/Observation
+Accept: *.*
+Content-Type: application/json+fhir
+
+<@ dan-bp-simple.json
+
+###### 
+POST http://localhost:5826/fhir/open/Observation
+Accept: *.*
+Content-Type: application/fhir+json
+
+<@ dan-bp-simple.json
+

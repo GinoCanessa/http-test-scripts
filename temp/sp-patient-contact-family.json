@@ -1,0 +1,19 @@
+{
+  "resourceType": "SearchParameter",
+  "id": "patient-contact-family",
+  "url": "http://example.org/fhir/SearchParameter/patient-contact-family",
+  "version": "0.0.1",
+  "name": "PatientContactFamily",
+  "status": "active",
+  "date": "2024-09-10",
+  "description": "Returns patients with a contact family name matching the request.",
+  "code": "contact-family",
+  "base": [
+      "Patient"
+  ],
+  "type": "string",
+  "expression": "Patient.contact.name.family",
+  "xpathUsage": "normal",
+  "multipleOr": true,
+  "multipleAnd": true
+}

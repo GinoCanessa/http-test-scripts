@@ -2,6 +2,17 @@
 @baseAz = https://fhirdemo5.azurewebsites.net
 @baseHapi = http://hapi.fhir.org/baseR4
 
+@baseFirely = https://secure.server.fire.ly
+
+@baseLocalCandleR4 = http://localhost:5826/fhir/r4
+
+### 
+GET https://vitals-server.ri.argo.run/fhir/smart/metadata
+Accept: application/fhir+json
+
+### 
+GET {{baseLocalCandleR4}}/metadata
+Accept: application/fhir+json
 
 ### 
 GET {{baseAz}}/metadata
@@ -14,3 +25,15 @@ Accept: application/fhir+json
 ###
 GET {{baseHapi}}/SearchParameter?target=Organization
 Accept: application/fhir+json
+
+###
+GET {{baseFirely}}/metadata
+Accept: application/fhir+json
+
+###
+GET {{baseFirely}}/.well-known/smart-configuration
+Accept: application/json
+
+###
+GET https://secure.server.fire.ly/.well-known/smart-configuration
+Accept: application/json

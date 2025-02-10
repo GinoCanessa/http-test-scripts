@@ -71,6 +71,29 @@ Content-Type: application/fhir+json
   ]
 }
 
+### POST Read and Version History Batch
+POST {{fhirUrl}}
+Accept: {{format}}
+Content-Type: application/fhir+json
+
+{
+  "resourceType": "Bundle",
+  "id": "test",
+  "type": "batch",
+  "entry": [{
+    "request": {
+      "method": "GET",
+      "url": "Patient/example"
+      }
+    }, {
+    "request": {
+      "method": "GET",
+      "url": "Patient/example/_history"
+      }
+    }
+  ]
+}
+
 ### POST REST-Hook Subscription
 # @name postRestHookSubscription
 POST {{fhirUrl}}/Subscription

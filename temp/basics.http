@@ -1,5 +1,6 @@
 // Configuration
-@fhirUrl = http://localhost:5826/fhir/r5
+//@fhirUrl = http://localhost:5826/fhir/r5
+@fhirUrl = http://localhost:5826/fhir/provider
 
 ### GET Metadata
 GET {{fhirUrl}}/metadata

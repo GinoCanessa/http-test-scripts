@@ -1,5 +1,6 @@
 // Configuration
-@fhirUrl = http://localhost:5826/fhir/r4
+# @fhirUrl = http://localhost:5826/fhir/r4
+@fhirUrl = https://ecr.ri.argo.run/fhir/r4
 @endpoint = http://localhost:5826/fhir/r4/$subscription-hook
 @topic = http://ginoc.io/FHIR/SubscriptionTopic/converted/hl7-fhir-us-ecr-2-1-0/subscription-lotc
 
@@ -9,6 +10,35 @@
 
 @format = application/fhir+json
 # @format = application/fhir+xml
+
+### POST ECR Subscription
+POST {{fhirUrl}}/Subscription
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./ecr-subscription.json
+
+### POST Encounter Started
+POST {{fhirUrl}}/Encounter
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./eve-encounter.json
+
+### POST Subscription Encounter Started
+POST {{fhirUrl}}/Basic
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./basic-subscription-encounter-in-progress.json
+
+### POST Subscription Encounter Started
+POST {{fhirUrl}}/Basic
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./basic-erc-encounter-start-topic.json
+
 
 ### GET ALL Conditions
 GET {{fhirUrl}}/Condition

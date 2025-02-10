@@ -1,34 +1,3 @@
-// Configuration
-#@v1 = https://subscriptions.argo.run/fhir/r4
-@v1 = http://localhost:5826/fhir/r4
-# @fhirUrl = http://hapi.fhir.org/baseR4
-#@fhirUrl = http://localhost:8080/fhir
-@fhirUrl = http://localhost:5103/fhir
-
-### GET Metadata
-
-GET {{fhirUrl}}/metadata
-Accept: application/fhir+json
-
-###
-GET {{v1}}/SubscriptionTopic/encounter-start
-Accept: application/fhir+json
-
-###
-GET {{v1}}/Patient/example
-Accept: application/fhir+json
-
-###
-GET {{v1}}/Encounter/example
-Accept: application/fhir+json
-
-
-### POST Subscription
-# @name postRestHookSubscription
-POST {{v1}}/$subscription-hook
-Accept: application/fhir+json
-Content-Type: application/fhir+json
-
 {
   "resourceType": "Bundle",
   "id": "7e539d06-0a2c-4050-98de-ffa598854733",

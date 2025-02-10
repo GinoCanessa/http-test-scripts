@@ -1,0 +1,47 @@
+{
+  "resourceType": "Encounter",
+  "meta": {
+    "source": "#YUwy5zH7WyiblJ5p",
+    "profile": [
+      "http://hl7.org/fhir/us/ecr/StructureDefinition/us-ph-encounter"
+    ]
+  },
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative: Encounter</b></p><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Resource Encounter \"encounter-eicr-eve-everywoman-external-encounter\" Version \"4\" Updated \"2021-07-19 03:02:05+0000\" </p><p style=\"margin-bottom: 0px\">Information Source: #YUwy5zH7WyiblJ5p!</p><p style=\"margin-bottom: 0px\">Profile: <a href=\"StructureDefinition-us-ph-encounter.html\">US Public Health Encounter</a></p></div><p><b>identifier</b>: id: 9937012</p><p><b>status</b>: finished</p><p><b>class</b>: External Encounter (Details: urn:oid:2.16.840.1.114222.4.5.274 code PHC2237 = 'PHC2237', stated as 'External Encounter')</p><p><b>type</b>:  <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\"> ()</span></p><p><b>subject</b>: <a href=\"Patient-patient-ecr-eve-everywoman.html\">Patient/patient-ecr-eve-everywoman: Eve Everywoman</a> \"\"</p><h3>Locations</h3><table class=\"grid\"><tr><td>-</td><td><b>Location</b></td></tr><tr><td>*</td><td><a href=\"Location-location-ecr-salem-medical-center.html\">Location/location-ecr-salem-medical-center: Clinic Bldg A, Salem Medical Center, 4646 Brown Rd, Salem, MA 02368</a> \"Clinic Bldg A, Salem Medical Center\"</td></tr></table></div>"
+  },
+  "identifier": [
+    {
+      "system": "http://hospital.smarthealthit.org",
+      "value": "9937012"
+    }
+  ],
+  "status": "in-progress",
+  "class": {
+    "system": "urn:oid:2.16.840.1.114222.4.5.274",
+    "code": "PHC2237",
+    "display": "External Encounter"
+  },
+  "type": [
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+          "valueCode": "not-applicable"
+        }
+      ]
+    }
+  ],
+  "subject": {
+    "reference": "Patient/patient-ecr-eve-everywoman",
+    "display": "Eve Everywoman"
+  },
+  "location": [
+    {
+      "location": {
+        "reference": "Location/location-ecr-salem-medical-center",
+        "display": "Clinic Bldg A, Salem Medical Center, 4646 Brown Rd, Salem, MA 02368"
+      }
+    }
+  ]
+}

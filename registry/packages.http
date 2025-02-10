@@ -1,7 +1,11 @@
+
+### QAs
+GET http://build.fhir.org/ig/qas.json
+Accept: application/json
+
 ###
 GET http://packages.fhir.org/hl7.fhir.extensions.r4
 Accept: application/json
-
 
 ###
 HEAD http://packages2.fhir.org/packages/hl7.fhir.extensions.r4/5.0.0
@@ -9,28 +13,78 @@ Accept: application/json
 
 
 ###
-GET https://packages.simplifier.net/hl7.terminology.r4/3.1.0
+GET http://registry.npmjs.com/fhir-kit-client
+Accept: application/json
 
 ###
-GET https://packages.simplifier.net/hl7.terminology.r4/
+GET http://registry.npmjs.com/axios
+Accept: application/json
 
 ###
-GET https://packages.simplifier.net/hl7.fhir.uv.subscriptions-backport/
+GET https://build.fhir.org/branches/
+Accept: application/json
 
 ###
-GET https://packages.simplifier.net/hl7.fhir.uv.subscriptions-backport.R4/
+GET https://packages2.fhir.org/packages/hl7.fhir.r6.core
+
+###
+GET https://packages2.fhir.org/packages/hl7.fhir.r4.core.as.r5
+
+###
+GET https://packages.simplifier.net/hl7.terminology/
+
+###
+GET https://packages2.fhir.org/packages/hl7.terminology.r4
+
+###
+GET https://packages.simplifier.net/hl7.fhir.us.ecr/
+
+###
+GET https://packages.fhir.org/hl7.fhir.uv.subscriptions-backport/
 
 ###
 GET https://packages2.fhir.org/packages/hl7.fhir.uv.subscriptions-backport
 
 ###
-GET http://packages.fhir.org/catalog?op=find&name=hl7.fhir.uv.subscriptions&pkgcanonical=&canonical=&fhirversion=
+GET https://packages.fhir.org/hl7.fhir.us.core
+
+
+###
+GET https://packages.simplifier.net/hl7.fhir.uv.subscriptions-backport.R4
+
+###
+GET https://packages2.fhir.org/packages/hl7.fhir.uv.subscriptions-backport.R4b
+
+###
+GET http://packages.fhir.org/catalog?op=find&name=hl7.fhir.uv.subscriptions-backport.r4b&pkgcanonical=&canonical=&fhirversion=
 
 ###
 GET http://packages2.fhir.org/packages/catalog?op=find&name=hl7.fhir.uv.subscriptions&pkgcanonical=&canonical=&fhirversion=
 
 ###
-GET https://packages2.fhir.org/packages/hl7.fhir.uv.subscriptions-backport
+GET http://packages.fhir.org/catalog?op=find&name=hl7.fhir.r4&pkgcanonical=&canonical=&fhirversion=
+
+###
+GET http://packages2.fhir.org/packages/catalog?op=find&name=hl7.fhir.r4&pkgcanonical=&canonical=&fhirversion=
+
+
+
+###
+GET http://packages.fhir.org/catalog?op=find&name=hl7.fhir.us.core&pkgcanonical=&canonical=&fhirversion=
+
+###
+GET http://packages2.fhir.org/packages/catalog?op=find&name=hl7.fhir.us.core&pkgcanonical=&canonical=&fhirversion=
+
+
+
+###
+GET http://packages.fhir.org/us.nlm.vsac
+Accept: application/json
+
+###
+GET http://packages2.fhir.org/packages/us.nlm.vsac
+Accept: application/json
+
 
 ###
 GET http://packages2.fhir.org/packages/hl7.terminology.r4
@@ -61,9 +115,50 @@ GET http://packages2.fhir.org/packages/hl7.fhir.r4b.core
 Accept: application/json
 
 ###
-GET http://packages2.fhir.org/packages/hl7.fhir.r5.core
+GET http://packages2.fhir.org/packages/hl7.fhir.r4.core
 Accept: application/json
 
 ###
-GET http://packages2.fhir.org/packages/hl7.fhir.r5.core/5.0.0
+GET http://packages2.fhir.org/packages/hl7.fhir.r6.core
+Accept: application/json
 
+###
+GET http://packages.fhir.org/hl7.fhir.uv.extensions.r4
+Accept: application/json
+
+###
+GET http://packages2.fhir.org/packages/hl7.fhir.uv.extensions.r4
+Accept: application/json
+
+###
+GET https://build.fhir.org/ig/HL7/fhir-subscription-backport-ig/package.r4.manifest.json
+
+###
+GET https://build.fhir.org/ig/HL7/fhir-subscription-backport-ig/package-list.json
+
+
+
+###
+GET https://www.hl7.org/fhir/uv/subscriptions-backport/package-list.json
+
+
+###
+GET http://packages2.fhir.org/packages/hl7.fhir.uv.extensions
+
+
+###
+GET http://packages.fhir.org/hl7.fhir.uv.xver-extensions
+
+
+###
+GET http://packages2.fhir.org/packages/hl7.fhir.uv.xver-extensions
+
+###
+GET http://packages2.fhir.org/packages/catalog?op=find&name=hl7.fhir.r4.core.as.r5&pkgcanonical=&canonical=&fhirversion=
+
+###
+GET http://packages2.fhir.org/packages/hl7.fhir.r4.core.as.r5
+
+###
+Get https://github.com/FHIR/ig-registry/blob/master/fhir-ig-list.json
+Accept: application/json
