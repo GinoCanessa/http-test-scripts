@@ -1,49 +1,49 @@
 // Configuration
-@candleUrl = http://localhost:5826/fhir/r4
-
+@fhirUrl = http://localhost:5826/fhir/r4
 @endpoint = http://localhost:5826/fhir/r4/$subscription-hook
+
 @topic = http://hl7.org/fhir/us/core/SubscriptionTopic/patient-data-feed
 
 # @contentLevel = empty
-# @contentLevel = id-only
-@contentLevel = full-resource
+@contentLevel = id-only
+# @contentLevel = full-resource
 
 @format = application/fhir+json
 
 ### GET Metadata - candle
-GET {{candleUrl}}/metadata
+GET {{fhirUrl}}/metadata
 Accept: application/fhir+json
 
 ### POST Basic SubscriptionTopic URL Search Parameter
-POST {{candleUrl}}/SearchParameter
+POST {{fhirUrl}}/SearchParameter
 Accept: application/fhir+json
 Content-Type: application/fhir+json
 
 <@ ./SearchParameter-basic-topic-url.json
 
 ### List subscription topics
-GET {{candleUrl}}/Basic?code=http://hl7.org/fhir/fhir-types|SubscriptionTopic
+GET {{fhirUrl}}/Basic?code=http://hl7.org/fhir/fhir-types|SubscriptionTopic
 Accept: application/fhir+json
 
 ### Resolve data-feed subscription topic
 # @name resolveTopicDataFeed
-GET {{candleUrl}}/Basic?subscriptiontopic-url=http://hl7.org/fhir/us/core/SubscriptionTopic/patient-data-feed
+GET {{fhirUrl}}/Basic?subscriptiontopic-url={{topic}}
 Accept: application/fhir+json
 
 ### Resolve a patient
 # @name resolvePatient
-GET {{candleUrl}}/Patient?_id=example
+GET {{fhirUrl}}/Patient?_id=example
 Accept: application/fhir+json
 
 ### POST Subscription
 # @name postRestHookSubscription
-POST {{candleUrl}}/Subscription
+POST {{fhirUrl}}/Subscription
 Accept: {{format}}
 Content-Type: application/fhir+json
 
 {
   "resourceType": "Subscription",
-  "status": "requested",
+  "status": "off",
   "reason": "Test subscription",
   "criteria": "{{topic}}",
   "_criteria" : {
@@ -82,3 +82,8 @@ Content-Type: application/fhir+json
       }
   }
 }
+
+### Get Subscription
+# @name getRestHookSubscription
+GET {{fhirUrl}}/Subscription/{{postRestHookSubscription.response.body.$.id}}
+Accept: {{format}}

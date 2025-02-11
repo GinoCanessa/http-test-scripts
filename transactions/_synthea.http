@@ -1,0 +1,37 @@
+// Configuration
+@fhirUrl = http://localhost:5826/fhir/r4
+
+@format = application/fhir+json
+
+### GET Metadata - candle
+GET {{fhirUrl}}/metadata
+Accept: application/fhir+json
+
+### POST Hospital bundle
+POST {{fhirUrl}}
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./Bundle-Hospital-01.json
+
+
+### Resolve an organization
+# @name resolveOrganization
+GET {{fhirUrl}}/Organization?identifier=https://github.com/synthetichealth/synthea|74ab949d-17ac-3309-83a0-13b4405c66aa
+Accept: application/fhir+json
+
+
+### POST Practitioner bundle
+POST {{fhirUrl}}
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./Bundle-Practitioner-01.json
+
+
+### POST Patient bundle
+POST {{fhirUrl}}
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+<@ ./Bundle-Patient-01.json
