@@ -2,3 +2,69 @@
 
 GET http://hl7.org/fhir/ValueSet/name-part-qualifier
 Accept: text/html
+
+
+############
+GET http://localhost:5826/fhir/r4/Patient?_type=Patient
+Accept: application/fhir+json
+
+# @endpoint = https://subscriptions.argo.run/fhir/r4/$subscription-hook
+@endpoint = http://localhost:5826/fhir/r4b/$subscription-hook
+
+####
+POST {{endpoint}}
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+{
+  "resourceType" : "Bundle",
+  "id" : "2E09262E275FC8B3E063A45A000A85DF",
+  "meta" :
+  {
+    "profile" :
+    [
+      "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-subscription-notification"
+    ]
+  },
+  "type" : "history",
+  "timestamp" : "2025-02-13T15:59:55.0000000Z",
+  "entry" :
+  [
+    {
+      "fullUrl" : "https://g307b186b6b6f7d-qqnzdlwxfvakvif0.adb.eu-amsterdam-1.oraclecloudapps.com/ords/fhir_subscriptions/2D4E484B1C7B241CE063A45A000A5539/r4/ec2458f2-1e24-41c8-b71b-0e701af7583d/Subscriptions/230",
+      "resource" :
+      {
+        "resourceType" : "SubscriptionStatus",
+        "id" : "2E09262E2760C8B3E063A45A000A85DF",
+        "status" : "active",
+        "type" : "event-notification",
+        "eventsSinceSubscriptionStart" : "3",
+        "notificationEvent" :
+        [
+          {
+            "eventNumber" : "4",
+            "timestamp" : "2025-02-13T15:59:55.0000000Z",
+            "focus" :
+            {
+              "reference" : "https://g307b186b6b6f7d-qqnzdlwxfvakvif0.adb.eu-amsterdam-1.oraclecloudapps.com/ords/fhir_subscriptions/2D4E484B1C7B241CE063A45A000A5539/r4/ec2458f2-1e24-41c8-b71b-0e701af7583d/Encounter/98261647"
+            }
+          }
+        ],
+        "subscription" :
+        {
+          "reference" : "Subscription/230"
+        },
+        "topic" : "http://hl7.org/SubscriptionTopic/resource-changes"
+      },
+      "request" :
+      {
+        "method" : "POST",
+        "url" : "https://fhir-ehr.cerner.com/r4/ec2458f2-1e24-41c8-b71b-0e701af7583d/Encounter/98261647"
+      },
+      "response" :
+      {
+        "status" : "201"
+      }
+    }
+  ]
+}
