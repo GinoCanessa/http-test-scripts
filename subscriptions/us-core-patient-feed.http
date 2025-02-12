@@ -10,16 +10,42 @@
 
 @format = application/fhir+json
 
-### GET Metadata - candle
+// ***********************
+// Patient Identifiers
+// ***********************
+
+// FHIR Core: Chalmers, Peter James: patient only
+@patientIdentifier01 = urn:oid:1.2.36.146.595.217.0.1|12345
+
+// Synthea: Balistreri607, Ada662 Sari509, D'Amore443, Ada662 Sari509: Patient, Encounter, Observation
+@patientIdentifier02 = https://github.com/synthetichealth/synthea|dbc4a3f7-9c69-4435-3ce3-4e1988ab6b91
+
+// Synthea: Gurule738, Eva64 Gloria696, Abreu185, Eva64 Gloria696: Patient, Encounter, Observation
+@patientIdentifier03 = https://github.com/synthetichealth/synthea|87cb7301-9d12-b048-416d-2b290eed1bde
+
+// Synthea: Keebler762, Diamond340 Mirtha993: Patient, Encounter, Observation
+@patientIdentifier04 = https://github.com/synthetichealth/synthea|d6cc7569-5f31-9648-ec6a-e1162b32b183
+
+// Synthea: Nader710, Hattie299 Reatha769, Harber290, Hattie299 Reatha769: Patient, Encounter, Observation
+@patientIdentifier05 = https://github.com/synthetichealth/synthea|5e0a6984-38d7-c604-f55f-f1de5e933768
+
+// Synthea: White193, Leigh689 Mel236: Patient, Encounter, Observation
+@patientIdentifier04 = https://github.com/synthetichealth/synthea|8635f76c-d1ee-89fe-9051-b90c16afd70c
+
+// set our preferred identifier
+@patientIdentifier = {{patientIdentifier01}}
+
+### GET Metadata
 GET {{fhirUrl}}/metadata
 Accept: application/fhir+json
 
-### POST Basic SubscriptionTopic URL Search Parameter
-POST {{fhirUrl}}/SearchParameter
+### POST bundle with patient data
+POST {{fhirUrl}}
 Accept: application/fhir+json
 Content-Type: application/fhir+json
 
-<@ ./SearchParameter-basic-topic-url.json
+<@ ./Bundle-initial-data.json
+
 
 ### List subscription topics
 GET {{fhirUrl}}/Basic?code=http://hl7.org/fhir/fhir-types|SubscriptionTopic
@@ -32,8 +58,13 @@ Accept: application/fhir+json
 
 ### Resolve a patient
 # @name resolvePatient
-GET {{fhirUrl}}/Patient?_id=example
+GET {{fhirUrl}}/Patient?identifier={{patientIdentifier}}
 Accept: application/fhir+json
+
+### Query patient compartment
+GET {{fhirUrl}}/Patient/{{resolvePatient.response.body.$.entry[0].resource.id}}/*
+Accept: application/fhir+json
+
 
 ### POST Subscription
 # @name postRestHookSubscription
@@ -43,14 +74,18 @@ Content-Type: application/fhir+json
 
 {
   "resourceType": "Subscription",
-  "status": "off",
+  "status": "requested",
   "reason": "Test subscription",
   "criteria": "{{topic}}",
   "_criteria" : {
     "extension": [
       {
         "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-filter-criteria",
-        "valueString": "Patient/{{resolvePatient.response.body.$.entry[0].resource.id}}"
+        "valueString": "*?patient=Patient/{{resolvePatient.response.body.$.entry[0].resource.id}}"
+      },
+      {
+        "url": "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-filter-criteria",
+        "valueString": "*?_type=Observation"
       }
     ]
   },
@@ -87,3 +122,39 @@ Content-Type: application/fhir+json
 # @name getRestHookSubscription
 GET {{fhirUrl}}/Subscription/{{postRestHookSubscription.response.body.$.id}}
 Accept: {{format}}
+
+
+### POST Create an in-progress Encounter
+# @name postCreateEncounter
+POST {{fhirUrl}}/Encounter
+Accept: {{format}}
+Content-Type: application/fhir+json
+
+{
+  "resourceType": "Encounter",
+  "status": "in-progress",
+  "class": {
+    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+    "code": "VR",
+    "display": "virtual"
+  },
+  "subject": {
+    "reference": "Patient/{{resolvePatient.response.body.$.entry[0].resource.id}}"
+  }
+}
+
+### DELETE Encounter
+DELETE {{fhirUrl}}/Encounter/{{postCreateEncounter.response.body.$.id}}
+Accept: {{format}}
+
+
+
+
+
+# ### POST Basic SubscriptionTopic URL Search Parameter
+# POST {{fhirUrl}}/SearchParameter
+# Accept: application/fhir+json
+# Content-Type: application/fhir+json
+
+# <@ ./SearchParameter-basic-topic-url.json
+
